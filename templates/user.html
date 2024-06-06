@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{user.username}}{% endblock %}
+
+{% block content %}
+<h1>{{user.username}}</h1>
+<p>Email: {{user.email}}</p>
+<p>First Name: {{user.first_name}}</p>
+<p>Last Name: {{user.last_name}}</p>
+
+<a class="btn btn-sm btn-primary" href="/users/{{user.username}}/feedback/add">Create Feedback</a>
+<form style="display: inline" method="post" action="/users/{{user.username}}/delete">
+  <button class="btn btn-danger btn-sm">Delete Account</button>
+</form>
+
+
+<div class="mt-3">
+  {% for feedback in feedbacks %}
+  <div class="card mt-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">{{feedback.title}}</h5>
+        <div>
+          <a href="/feedback/{{feedback.id}}/update" class="btn btn-info btn-sm">Edit</a>
+          <form style="display: inline" action="/feedback/{{feedback.id}}/delete" method="post">
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </div>
+      </div>
+      <p class="card-text mt-2">{{feedback.content}}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
